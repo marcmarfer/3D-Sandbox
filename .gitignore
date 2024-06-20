@@ -1,0 +1,29 @@
+# Ignore node_modules directory
+node_modules/
+
+# Ignore built files for Three.js or other libraries
+build/
+dist/
+*.min.js
+
+# Ignore development or temporary files
+*.log
+*.bak
+*.tmp
+
+# Ignore IDE or editor specific files
+.vscode/
+.idea/
+
+# Ignore npm-debug.log file
+npm-debug.log
+
+# Ignore any local configuration files
+.env
+
+# Ignore compiled WebGL or shader files
+*.glsl
+
+# Ignore OS generated files
+.DS_Store
+Thumbs.db

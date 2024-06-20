@@ -1,0 +1,8 @@
+body {
+    margin: 0;
+}
+
+.stats-panel {
+    transform: scale(1.1);
+    margin: 20px;
+}
