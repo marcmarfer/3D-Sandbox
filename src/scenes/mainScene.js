@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-
+import Stats from 'stats.js'; // Import stats.js if using a module bundler
 import { createFirstPersonCamera } from '../cameras/firstPersonCamera.js';
 import { createThirdPersonCamera } from '../cameras/thirdPersonCamera.js';
 import { setupPlayerMovement } from '../controls/playerMovement.js';
@@ -9,6 +9,7 @@ import { Player } from '../entities/player.js';
 
 export function setupScene() {
     const textureLoader = new THREE.TextureLoader();
+    const stats = new Stats();
     let currentCamera;
     let scene, renderer;
     let player;
@@ -23,6 +24,11 @@ export function setupScene() {
         renderer = new THREE.WebGLRenderer();
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
+
+        // Add the stats panel to the document
+        stats.showPanel(0);
+        document.body.appendChild(stats.dom);
+        stats.dom.classList.add('stats-panel');
 
         // Set initial camera
         currentCamera = createThirdPersonCamera(player);
@@ -51,6 +57,7 @@ export function setupScene() {
         requestAnimationFrame(animate);
         renderer.render(scene, currentCamera);
         player.updateMovement();
+        stats.update();
     }
 
     init();
