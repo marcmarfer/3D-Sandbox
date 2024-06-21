@@ -23,30 +23,30 @@ export function setupPlayerMovement(player, camera) {
         const direction = new THREE.Vector3();
         camera.getWorldDirection(direction);
         direction.normalize();
-
+        
         const forward = new THREE.Vector3(direction.x, 0, direction.z);
         const backward = new THREE.Vector3(-direction.x, 0, -direction.z);
 
         const left = new THREE.Vector3();
-        left.crossVectors(direction, camera.up);
+        left.crossVectors(camera.up, direction);
 
         const right = new THREE.Vector3();
-        right.crossVectors(camera.up, direction);
+        right.crossVectors(direction, camera.up);
 
         if (keys.includes('w') || keys.includes('ArrowUp')) {
-            player.position.add(forward.multiplyScalar(player.speed));
+            player.body.position.vadd(forward.multiplyScalar(player.speed), player.body.position);
         }
         if (keys.includes('s') || keys.includes('ArrowDown')) {
-            player.position.add(backward.multiplyScalar(player.speed));
+            player.body.position.vadd(backward.multiplyScalar(player.speed), player.body.position);
         }
         if (keys.includes('a') || keys.includes('ArrowLeft')) {
-            player.position.sub(left.multiplyScalar(player.speed));
+            player.body.position.vadd(left.multiplyScalar(player.speed), player.body.position);
         }
         if (keys.includes('d') || keys.includes('ArrowRight')) {
-            player.position.sub(right.multiplyScalar(player.speed));
+            player.body.position.vadd(right.multiplyScalar(player.speed), player.body.position);
         }
 
-        //for third person camera case
+        // For third person camera case
         player.updateCamera();
     };
 }
