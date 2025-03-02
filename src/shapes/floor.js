@@ -1,28 +1,42 @@
 import * as THREE from 'three';
 import * as CANNON from 'cannon-es';
+import { createParkour } from './parkour.js';
+import { addCube } from './cube.js';
 
-export function addFloor(scene, textureLoader, world) {
-    // Grid size
-    const numTiles = 3;
-    const tileSize = 3;
+export function addFloor(scene, world) {
+    // Arena dimensions
+    const arenaSize = 30;
+    
+    // Floor material - pure white
+    const floorMaterial = new THREE.MeshStandardMaterial({ 
+        color: 0xFFFFFF,
+        roughness: 0.1,
+        metalness: 0.0
+    });
 
-    const floorTexture = textureLoader.load('floorTexture.png');
-    const floorMaterial = new THREE.MeshBasicMaterial({ map: floorTexture });
+    // Create floor
+    const floorGeometry = new THREE.PlaneGeometry(arenaSize, arenaSize);
+    const floor = new THREE.Mesh(floorGeometry, floorMaterial);
+    floor.rotation.x = -Math.PI / 2;
+    floor.receiveShadow = true;
+    scene.add(floor);
 
-    for (let i = -numTiles; i < numTiles; i++) {
-        for (let j = -numTiles; j < numTiles; j++) {
-            // Create a floor tile in Three.js for visualization
-            const floorGeometry = new THREE.PlaneGeometry(tileSize, tileSize, 1, 1);
-            const floorTile = new THREE.Mesh(floorGeometry, floorMaterial);
-            floorTile.rotation.x = -Math.PI / 2;
-            floorTile.position.set(i * tileSize, 0, j * tileSize);
-            scene.add(floorTile);
+    // Floor physics
+    const floorShape = new CANNON.Box(new CANNON.Vec3(arenaSize/2, 0.1, arenaSize/2));
+    const floorBody = new CANNON.Body({ mass: 0, shape: floorShape });
+    floorBody.position.set(0, -0.1, 0);
+    world.addBody(floorBody);
 
-            // Create a floor tile in Cannon.js for physics
-            const floorShape = new CANNON.Box(new CANNON.Vec3(tileSize / 2, 0.1, tileSize / 2));
-            const floorBody = new CANNON.Body({ mass: 0, shape: floorShape });
-            floorBody.position.set(i * tileSize, -0.1, j * tileSize);
-            world.addBody(floorBody);
-        }
-    }
+    // Static cubes (red)
+    addCube(-2, 0.5, -3, scene, world, false);
+    addCube(2, 0.5, -3, scene, world, false);
+    addCube(0, 0.5, -5, scene, world, false);
+
+    // Movable cubes (green)
+    addCube(0, 0.5, -2, scene, world, true);
+    addCube(-1, 0.5, -4, scene, world, true);
+    addCube(1, 0.5, -4, scene, world, true); 
+
+    // Parkour course
+    return createParkour(scene, world, { x: -arenaSize/4, y: 0, z: -arenaSize/4 });
 }
