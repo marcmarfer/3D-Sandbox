@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import * as Cannon from 'cannon';
+import * as CANNON from 'cannon-es';
 
 export class Player extends THREE.Object3D {
     constructor(speed = 0.03) {
@@ -12,10 +12,10 @@ export class Player extends THREE.Object3D {
         this.playerMesh = new THREE.Mesh(playerGeometry, playerMaterial);
         this.add(this.playerMesh);
 
-        const shape = new Cannon.Box(new Cannon.Vec3(0.5, 1, 0.5));
-        this.body = new Cannon.Body({
+        const shape = new CANNON.Box(new CANNON.Vec3(0.5, 1, 0.5));
+        this.body = new CANNON.Body({
             mass: 5,
-            position: new Cannon.Vec3(0, 10, 4),
+            position: new CANNON.Vec3(0, 10, 4),
             shape: shape,
         });
 

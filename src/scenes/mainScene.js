@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import Stats from 'stats.js';
-import Cannon from 'cannon';
+import * as CANNON from 'cannon-es';
 
 import { createFirstPersonCamera } from '../cameras/firstPersonCamera.js';
 import { createThirdPersonCamera } from '../cameras/thirdPersonCamera.js';
@@ -12,7 +12,7 @@ import { addPlayer } from '../entities/playerUtils.js';
 export function setupScene() {
     const textureLoader = new THREE.TextureLoader();
     const stats = new Stats();
-    const world = new Cannon.World();
+    const world = new CANNON.World();
     world.gravity.set(0, -9.82, 0); // Set gravity for Cannon.js world
 
     let currentCamera;
