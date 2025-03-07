@@ -3,6 +3,7 @@
 # 3D Sandbox Project
 
 Welcome to my 3D Sandbox project! This repository provides a 3D playground built on Three.js for testing and exploring game mechanics, shaders, textures, models, physics simulations, animations, and interactive elements.
+
 ![{DC881065-02BB-40D7-A46B-D22044C5815A}](https://github.com/user-attachments/assets/767e7a19-4c03-491e-8444-e8df3fde290d)
 
 ## Prerequisites
